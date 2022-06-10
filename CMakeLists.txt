@@ -11,22 +11,22 @@ if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
     option(GIT_SUBMODULE "Check submodules during build" ON)
     if(GIT_SUBMODULE)
         message(STATUS "Submodule update")
-        execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init --recursive
+        execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init --recursive --remote
                 WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
                 RESULT_VARIABLE GIT_SUBMOD_RESULT)
 
-        #add_subdirectory(ggpo)
+        add_subdirectory(ggpo)
         #add_subdirectory(hybrid-GGPO)
 
         #add_library (hybrid_ggpo "hybrid_ggpo.cpp" "hybrid_ggpo.h")
-        add_executable(VectorWarHybrid "gamestate.cpp" "gamestate.h" "gdi_renderer.cpp" "gdi_renderer.h"
+        add_executable(VectorWarHybrid WIN32 "gamestate.cpp" "gamestate.h" "gdi_renderer.cpp" "gdi_renderer.h"
                 "ggpo_perfmon.cpp" "ggpo_perfmon.h" "main.cpp" "nongamestate.h" "renderer.h" "Resource.h" "targetver.h"
                 "vectorwar.cpp" "vectorwar.h" "VectorWar.rc")
 
         add_common_flags(VectorWarHybrid)
         # Change the character set to unicode.
         add_definitions(-D_UNICODE -DUNICODE)
-        target_link_libraries(VectorWarHybrid LINK_PUBLIC hybrid_ggpo GGPO winmm.lib ws2_32.lib)
+        target_link_libraries(VectorWarHybrid LINK_PUBLIC GGPO winmm.lib ws2_32.lib)
         target_compile_options(VectorWarHybrid PRIVATE "/W4" "/WX")
         #target_link_libraries(VectorWarHybrid GGPO)
 
