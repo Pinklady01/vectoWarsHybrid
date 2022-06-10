@@ -3,7 +3,7 @@
 #
 cmake_minimum_required (VERSION 3.8)
 
-project ("hybrid_ggpo")
+project ("VectorWarHybrid")
 
 find_package(Git QUIET)
 if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
@@ -14,13 +14,16 @@ if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
         execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init --recursive
                 WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
                 RESULT_VARIABLE GIT_SUBMOD_RESULT)
-        add_subdirectory(DALIL_DILER_GACON_ML_5A/Atlus)
-        add_subdirectory(ggpo)
+
+        #add_subdirectory(ggpo)
+        add_subdirectory(hybrid-GGPO)
 
         #add_library (hybrid_ggpo "hybrid_ggpo.cpp" "hybrid_ggpo.h")
-        add_executable(hybrid_ggpo "hybrid_ggpo.cpp" "hybrid_ggpo.h")
-        target_link_libraries(hybrid_ggpo Atlus)
-        target_link_libraries(hybrid_ggpo GGPO)
+        add_executable(VectorWarHybrid "gamestate.cpp" "gamestate.h" "gdi_renderer.cpp" "gdi_renderer.h"
+                "ggpo_perfmon.cpp" "ggpo_perfmon.h" "main.cpp" "nongamestate.h" "renderer.h" "Resource.h" "targetver.h"
+                "vectorwar.cpp" "vectorwar.h")
+        target_link_libraries(VectorWarHybrid hybrid_ggpo)
+        #target_link_libraries(VectorWarHybrid GGPO)
 
         if(NOT GIT_SUBMOD_RESULT EQUAL "0")
             message(FATAL_ERROR "git submodule update --init --recursive failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
@@ -29,7 +32,7 @@ if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
 endif()
 # Add source to this project's executable.
 if (CMAKE_VERSION VERSION_GREATER 3.12)
-    set_property(TARGET hybrid_ggpo PROPERTY CXX_STANDARD 20)
+    set_property(TARGET VectorWarHybrid PROPERTY CXX_STANDARD 20)
 endif()
 #if(NOT EXISTS "${PROJECT_SOURCE_DIR}/extern/repo/CMakeLists.txt")
 #    message(FATAL_ERROR "The submodules were not downloaded! GIT_SUBMODULE was turned off or failed. Please update submodules and try again.")

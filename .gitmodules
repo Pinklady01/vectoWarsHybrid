@@ -1,0 +1,3 @@
+[submodule "hybrid-GGPO"]
+	path = hybrid-GGPO
+	url = https://github.com/Neffros/hybrid-GGPO
