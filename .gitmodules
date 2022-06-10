@@ -1,3 +1,4 @@
-[submodule "ggpo"]
-	path = ggpo
-	url = https://github.com/pond3r/ggpo
+[submodule "hybrid-GGPO"]
+	path = hybrid-GGPO
+	url = https://github.com/Neffros/hybrid-GGPO
+    branch = main
