@@ -1,17 +1,36 @@
-include(CMakeSources.cmake)
+# CMakeList.txt : CMake project for hybrid_ggpo, include source and define
+# project specific logic here.
+#
+cmake_minimum_required (VERSION 3.8)
 
-add_executable(VectorWar WIN32 
-	${GGPO_EXAMPLES_VECTORWAR_SRC}
-)
+project ("hybrid_ggpo")
 
-if(WIN32 AND BUILD_SHARED_LIBS)
-	add_definitions(-DGGPO_SHARED_LIB)
+find_package(Git QUIET)
+if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
+    message("FOUND GIT")
+    option(GIT_SUBMODULE "Check submodules during build" ON)
+    if(GIT_SUBMODULE)
+        message(STATUS "Submodule update")
+        execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init --recursive
+                WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+                RESULT_VARIABLE GIT_SUBMOD_RESULT)
+        add_subdirectory(DALIL_DILER_GACON_ML_5A/Atlus)
+        add_subdirectory(ggpo)
+
+        #add_library (hybrid_ggpo "hybrid_ggpo.cpp" "hybrid_ggpo.h")
+        add_executable(hybrid_ggpo "hybrid_ggpo.cpp" "hybrid_ggpo.h")
+        target_link_libraries(hybrid_ggpo Atlus)
+        target_link_libraries(hybrid_ggpo GGPO)
+
+        if(NOT GIT_SUBMOD_RESULT EQUAL "0")
+            message(FATAL_ERROR "git submodule update --init --recursive failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
+        endif()
+    endif()
 endif()
-
-add_common_flags(VectorWar)
-# Change the character set to unicode.
-add_definitions(-D_UNICODE -DUNICODE)
-
-# Link against GGPO, winmm (Windows Multimedia API), and ws2_32 (Winsock).
-target_link_libraries(VectorWar LINK_PUBLIC GGPO winmm.lib ws2_32.lib)
-target_compile_options(VectorWar PRIVATE "/W4" "/WX")
+# Add source to this project's executable.
+if (CMAKE_VERSION VERSION_GREATER 3.12)
+    set_property(TARGET hybrid_ggpo PROPERTY CXX_STANDARD 20)
+endif()
+#if(NOT EXISTS "${PROJECT_SOURCE_DIR}/extern/repo/CMakeLists.txt")
+#    message(FATAL_ERROR "The submodules were not downloaded! GIT_SUBMODULE was turned off or failed. Please update submodules and try again.")
+#endif()
