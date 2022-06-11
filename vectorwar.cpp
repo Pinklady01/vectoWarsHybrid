@@ -6,6 +6,7 @@
 #include "gdi_renderer.h"
 #include "vectorwar.h"
 #include "ggpo_perfmon.h"
+#include <hybridggpo.h>
 
 //#define SYNC_TEST    // test: turn on synctest
 #define MAX_PLAYERS     64
@@ -228,7 +229,7 @@ VectorWar_Init(HWND hwnd, unsigned short localport, int num_players, GGPOPlayer 
 #if defined(SYNC_TEST)
    result = ggpo_start_synctest(&ggpo, &cb, "vectorwar", num_players, sizeof(int), 1);
 #else
-   result = ggpo_start_session(&ggpo, &cb, "vectorwar", num_players, sizeof(int), localport);
+   result = ggpo_start_hybrid_session(&ggpo, &cb, "vectorwar", num_players, sizeof(int), localport, false, NULL);
 #endif
 
    // automatically disconnect clients after 3000 ms and start our count-down timer

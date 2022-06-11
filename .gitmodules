@@ -1,4 +1,4 @@
 [submodule "hybrid-GGPO"]
 	path = hybrid-GGPO
 	url = https://github.com/Neffros/hybrid-GGPO
-    branch = main
+    branch = refacto/build_lib_from_ggpo_sources

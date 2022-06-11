@@ -26,7 +26,7 @@ if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
         add_common_flags(VectorWarHybrid)
         # Change the character set to unicode.
         add_definitions(-D_UNICODE -DUNICODE)
-        target_link_libraries(VectorWarHybrid LINK_PUBLIC hybrid_ggpo winmm.lib ws2_32.lib)
+        target_link_libraries(VectorWarHybrid LINK_PUBLIC HybridGGPO winmm.lib ws2_32.lib)
         target_compile_options(VectorWarHybrid PRIVATE "/W4" "/WX")
         #target_link_libraries(VectorWarHybrid GGPO)
 
