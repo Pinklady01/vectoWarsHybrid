@@ -1,6 +1,7 @@
 #pragma once
 
 #include <hybridggpo.h>
+#include "vectorwar.h"
 
 //Strategy to predict a random input
 class VMRandomInputPredictionStrategy : public IInputPredictionStrategy
@@ -18,6 +19,6 @@ class VMRandomInputPredictionStrategy : public IInputPredictionStrategy
         buffer;
         size;
 
-        *(int*)(values) = rand();
+        *(int*)(values) = VectorWarInputs::INPUT_FIRE;
     }
 };
