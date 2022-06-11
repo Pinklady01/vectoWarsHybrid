@@ -6,7 +6,7 @@ REM           Press 'D' to fire
 REM           Press 'P' to show performance monitor
 REM           Shift to strafe
 
-pushd ./
+pushd .\out\build\x64-Debug
 del *.log
 start VectorWarHybrid.exe 7000 2 local 127.0.0.1:7001 
 start VectorWarHybrid.exe 7001 2 127.0.0.1:7000 local
