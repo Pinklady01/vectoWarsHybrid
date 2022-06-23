@@ -441,7 +441,6 @@ VectorWar_Idle(int time)
 void
 VectorWar_Exit()
 {
-   gs.file.close();
    memset(&gs, 0, sizeof(gs));
    memset(&ngs, 0, sizeof(ngs));
 
@@ -451,4 +450,6 @@ VectorWar_Exit()
    }
    delete renderer;
    renderer = NULL;
+   gs.file.close();
+
 }

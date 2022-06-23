@@ -191,15 +191,23 @@ GameState::Update(int inputs[], int disconnect_flags)
          _ships[i].cooldown--;
       }
    }
+
+   StoreFrameInCsv(inputs);
 }
 
 void GameState::InitCsvColumns() {
-    file.open(CSV_FILE_PATH);
+    std::ifstream ifile;
+    ifile.open(CSV_FILE_PATH);
+    bool exists = false;
+    if(ifile)
+        exists = true;
+    ifile.close();
+    file.open(CSV_FILE_PATH, std::ios::app);
+    if(exists)
+        return;
     std::vector<std::string> columns;
     columns.emplace_back("frame_number");
-    //maybe bounds, num_ships? unchanged data in game state probably not neccessary to store
 
-    //double values should be summed down to a precise value
     for(int i = 1; i < _num_ships + 1; ++i)
     {
         std::string playerPrefix = "p" + std::to_string(i) + "_";
@@ -207,8 +215,8 @@ void GameState::InitCsvColumns() {
         columns.emplace_back(playerPrefix + "posY");
         columns.emplace_back(playerPrefix + "velocityX");
         columns.emplace_back(playerPrefix + "velocityY");
-        columns.emplace_back(playerPrefix + "radius");
         columns.emplace_back(playerPrefix + "heading");
+        columns.emplace_back(playerPrefix + "health");
         columns.emplace_back(playerPrefix + "speed");
         columns.emplace_back(playerPrefix + "cooldown");
         for(int bulletIndex = 1; bulletIndex < MAX_BULLETS + 1; ++bulletIndex)
@@ -221,11 +229,60 @@ void GameState::InitCsvColumns() {
             columns.emplace_back(bulletPrefix + "velocityY");
         }
         columns.emplace_back(playerPrefix + "score");
+        columns.emplace_back(playerPrefix + "input_rotate_left");
+        columns.emplace_back(playerPrefix + "input_rotate_right");
+        columns.emplace_back(playerPrefix + "input_thrust");
+        columns.emplace_back(playerPrefix + "input_break");
+        columns.emplace_back(playerPrefix + "input_fire");
     }
     std::string headerLine;
     for(auto column : columns)
     {
         headerLine += column + ";";
     }
+    headerLine += "\n";
     file << headerLine;
+}
+
+void GameState::StoreFrameInCsv(int inputs[])  {
+    std::string frameLine;
+
+    frameLine += std::to_string(_framenumber) + ";";
+    for(int i = 0; i < _num_ships; ++i)
+    {
+        frameLine += std::to_string(_ships[i].position.x) + ";";
+        frameLine += std::to_string(_ships[i].position.y) + ";";
+        frameLine += std::to_string(_ships[i].velocity.dx) + ";";
+        frameLine += std::to_string(_ships[i].velocity.dy) + ";";
+        frameLine += std::to_string(_ships[i].heading) + ";";
+        frameLine += std::to_string(_ships[i].health) + ";";
+        frameLine += std::to_string(_ships[i].speed) + ";";
+        frameLine += std::to_string(_ships[i].cooldown) + ";";
+        for(auto bullet : _ships[i].bullets)
+        {
+            frameLine += std::to_string(bullet.active) + ";";
+            frameLine += std::to_string(bullet.position.x) + ";";
+            frameLine += std::to_string(bullet.position.y) + ";";
+            frameLine += std::to_string(bullet.velocity.dx) + ";";
+            frameLine += std::to_string(bullet.velocity.dy) + ";";
+        }
+        frameLine += std::to_string(_ships[i].score) + ";";
+        SerializeShipInputs(inputs[i]);
+        for(int j = 0; j < 5; ++j)
+        {
+            frameLine += std::to_string(inputsBool[j]) + ";";
+        }
+    }
+
+    frameLine += "\n";
+    file << frameLine;
+}
+
+void GameState::SerializeShipInputs(int inputs) {
+
+    inputsBool[0] = inputs & INPUT_ROTATE_RIGHT;
+    inputsBool[1] = inputs & INPUT_ROTATE_LEFT;
+    inputsBool[2] = inputs & INPUT_THRUST;
+    inputsBool[3] = inputs & INPUT_BREAK;
+    inputsBool[4] = inputs & INPUT_FIRE;
 }

@@ -62,14 +62,15 @@ struct GameState {
    void ParseShipInputs(int inputs, int i, double *heading, double *thrust, int *fire);
    void MoveShip(int i, double heading, double thrust, int fire);
    void Update(int inputs[], int disconnect_flags);
-
+   void StoreFrameInCsv(int inputs[]);
+   void SerializeShipInputs(int inputs);
    int         _framenumber;
    RECT        _bounds;
    int         _num_ships;
    Ship        _ships[MAX_SHIPS];
 
    std::ofstream file;
-
+   bool inputsBool[5];
 };
 
 #endif
