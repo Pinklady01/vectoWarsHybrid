@@ -1,6 +1,7 @@
 #include <windows.h>
 #include <stdio.h>
 #include <math.h>
+#include <vector>
 #include "vectorwar.h"
 #include "gamestate.h"
 
@@ -56,6 +57,7 @@ GameState::Init(HWND hwnd, int num_players)
    }
 
    InflateRect(&_bounds, -8, -8);
+   InitCsvColumns();
 }
 
 void GameState::GetShipAI(int i, double *heading, double *thrust, int *fire)
@@ -189,4 +191,41 @@ GameState::Update(int inputs[], int disconnect_flags)
          _ships[i].cooldown--;
       }
    }
+}
+
+void GameState::InitCsvColumns() {
+    file.open(CSV_FILE_PATH);
+    std::vector<std::string> columns;
+    columns.emplace_back("frame_number");
+    //maybe bounds, num_ships? unchanged data in game state probably not neccessary to store
+
+    //double values should be summed down to a precise value
+    for(int i = 1; i < _num_ships + 1; ++i)
+    {
+        std::string playerPrefix = "p" + std::to_string(i) + "_";
+        columns.emplace_back(playerPrefix + "posX");
+        columns.emplace_back(playerPrefix + "posY");
+        columns.emplace_back(playerPrefix + "velocityX");
+        columns.emplace_back(playerPrefix + "velocityY");
+        columns.emplace_back(playerPrefix + "radius");
+        columns.emplace_back(playerPrefix + "heading");
+        columns.emplace_back(playerPrefix + "speed");
+        columns.emplace_back(playerPrefix + "cooldown");
+        for(int bulletIndex = 1; bulletIndex < MAX_BULLETS + 1; ++bulletIndex)
+        {
+            std::string bulletPrefix = playerPrefix + "bullet" + std::to_string(bulletIndex) + "_";
+            columns.emplace_back(bulletPrefix + "active");
+            columns.emplace_back(bulletPrefix + "posX");
+            columns.emplace_back(bulletPrefix + "posY");
+            columns.emplace_back(bulletPrefix + "velocityX");
+            columns.emplace_back(bulletPrefix + "velocityY");
+        }
+        columns.emplace_back(playerPrefix + "score");
+    }
+    std::string headerLine;
+    for(auto column : columns)
+    {
+        headerLine += column + ";";
+    }
+    file << headerLine;
 }

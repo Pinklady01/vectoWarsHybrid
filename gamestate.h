@@ -1,6 +1,9 @@
 #ifndef _GAMESTATE_H_
 #define _GAMESTATE_H_
 
+#include <string>
+#include <iostream>
+#include <fstream>
 /*
  * gamestate.h --
  *
@@ -24,6 +27,7 @@
 #define BULLET_DAMAGE           10
 
 #define MAX_SHIPS               4
+#define CSV_FILE_PATH           "dataset.csv"
 
 struct Position {
    double x, y;
@@ -53,6 +57,7 @@ struct Ship {
 
 struct GameState {
    void Init(HWND hwnd, int num_players);
+   void InitCsvColumns();
    void GetShipAI(int i, double *heading, double *thrust, int *fire);
    void ParseShipInputs(int inputs, int i, double *heading, double *thrust, int *fire);
    void MoveShip(int i, double heading, double thrust, int fire);
@@ -62,6 +67,9 @@ struct GameState {
    RECT        _bounds;
    int         _num_ships;
    Ship        _ships[MAX_SHIPS];
+
+   std::ofstream file;
+
 };
 
 #endif
