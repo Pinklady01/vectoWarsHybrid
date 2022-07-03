@@ -3,10 +3,10 @@
 #include <gl/glu.h>
 #include <math.h>
 #include <stdio.h>
+#include "hybrid-GGPO/hybrid_ggpo.h"
 #include "gdi_renderer.h"
 #include "vectorwar.h"
 #include "ggpo_perfmon.h"
-#include <hybridggpo.h>
 
 #include "VMRandomInputPredictionStrategy.h"
 

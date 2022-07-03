@@ -1,10 +1,11 @@
 #pragma once
 
-#include <hybridggpo.h>
+#include "hybrid-GGPO/hybrid_ggpo.h"
+
 #include "vectorwar.h"
 
 //Strategy to predict a random input
-class VMRandomInputPredictionStrategy : public IInputPredictionStrategy
+class VMRandomInputPredictionStrategy : public IInputPredictionStrategyService
 {
     virtual void onFrameAdvanced(int frame, char const* buffer, void* values, int size) override {
         frame;
@@ -19,6 +20,6 @@ class VMRandomInputPredictionStrategy : public IInputPredictionStrategy
         buffer;
         size;
 
-        *(int*)(values) = VectorWarInputs::INPUT_FIRE;
+        *(int*)(values) = VectorWarInputs::INPUT_THRUST;
     }
 };
