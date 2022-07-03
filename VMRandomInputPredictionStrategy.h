@@ -1,6 +1,6 @@
 #pragma once
 
-#include "hybrid-GGPO/hybrid_ggpo.h"
+#include "hybrid_ggpo.h"
 
 #include "vectorwar.h"
 
