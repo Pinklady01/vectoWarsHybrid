@@ -1,7 +1,6 @@
 #pragma once
 
 #include "hybrid_ggpo.h"
-
 #include "vectorwar.h"
 
 //Strategy to predict a random input

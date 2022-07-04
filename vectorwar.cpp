@@ -7,6 +7,7 @@
 #include "gdi_renderer.h"
 #include "vectorwar.h"
 #include "ggpo_perfmon.h"
+#include "VMGameStateSampleMapper.h"
 
 #include "VMRandomInputPredictionStrategy.h"
 
@@ -346,7 +347,7 @@ VectorWar_DrawCurrentFrame()
 void VectorWar_AdvanceFrame(int inputs[], int disconnect_flags)
 {
    gs.Update(inputs, disconnect_flags);
-
+   DatasetDSSampleMapper sampleMapper = VMGameStateSampleMapper::ConvertGameStateToSampleMapper(gs, inputs);
    // update the checksums to display in the top of the window.  this
    // helps to detect desyncs.
    ngs.now.framenumber = gs._framenumber;

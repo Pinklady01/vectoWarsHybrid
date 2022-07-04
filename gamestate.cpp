@@ -180,11 +180,11 @@ GameState::Update(int inputs[], int disconnect_flags)
 
       disconnect_flags;
 
-      //if (disconnect_flags & (1 << i)) {
-         //GetShipAI(i, &heading, &thrust, &fire);
-      //} else {
+      if (disconnect_flags & (1 << i)) {
+         GetShipAI(i, &heading, &thrust, &fire);
+      } else {
          ParseShipInputs(inputs[i], i, &heading, &thrust, &fire);
-      //}
+      }
       MoveShip(i, heading, thrust, fire);
 
       if (_ships[i].cooldown) {
