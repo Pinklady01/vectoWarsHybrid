@@ -1,8 +1,6 @@
-#include "VMGameStateSampleMapper.h"
-#include "vectorwar.h"
+#include "VMGameStateDatasetSampleMapper.h"
 
-
-DatasetDSSampleMapper VMGameStateSampleMapper::ConvertGameStateToSampleMapper(const GameState &gameState, int inputs[]) {
+DatasetDSSampleMapper VMGameStateDatasetSampleMapper::ConvertGameStateToSampleMapper(const GameState &gameState, const int inputs[]) {
     DatasetDSSampleMapper sampleMapper;
     for(auto i = 0; i < gameState._num_ships; ++i)
     {
@@ -35,26 +33,5 @@ DatasetDSSampleMapper VMGameStateSampleMapper::ConvertGameStateToSampleMapper(co
         sampleMapper.add(inputs[i] & INPUT_FIRE);
     }
     return sampleMapper;
+
 }
-/**
- * posX
- * posY
- * veloctiyX
- * velocityY
- * heading
- * health
- * speed TODO verifier si la valeur change
- * for each bullet:
- *  active
- *  posX
- *  posY
- *  velocityX
- *  velocityY
- * score
- * input rotate left
- * input rotate right
- * input thrust
- * input break
- * input fire
- *
- */

@@ -21,7 +21,7 @@ if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
         #add_library (hybrid_ggpo "hybrid_ggpo.cpp" "hybrid_ggpo.h")
         add_executable(VectorWarHybrid WIN32 "gamestate.cpp" "gamestate.h" "gdi_renderer.cpp" "gdi_renderer.h"
                 "ggpo_perfmon.cpp" "ggpo_perfmon.h" "main.cpp" "nongamestate.h" "renderer.h" "Resource.h" "targetver.h"
-                VMGameStateDatasetSampleMapper.cpp VMGameStateSampleMapper.h
+                VMGameStateDatasetSampleMapper.cpp VMGameStateDatasetSampleMapper.h
                 "vectorwar.cpp" "vectorwar.h" "VectorWar.rc" )
 
         add_common_flags(VectorWarHybrid)
