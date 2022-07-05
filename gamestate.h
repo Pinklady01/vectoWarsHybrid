@@ -1,3 +1,9 @@
+#pragma once
+#include <windows.h>
+#include <stdio.h>
+#include <math.h>
+#include "vectorwar.h"
+
 #ifndef _GAMESTATE_H_
 #define _GAMESTATE_H_
 

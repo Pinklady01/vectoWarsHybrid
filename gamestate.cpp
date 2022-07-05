@@ -1,7 +1,3 @@
-#include <windows.h>
-#include <stdio.h>
-#include <math.h>
-#include "vectorwar.h"
 #include "gamestate.h"
 
 extern GGPOSession *ggpo;

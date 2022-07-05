@@ -2,6 +2,7 @@
 
 #include "hybrid_ggpo.h"
 #include "gamestate.h"
+#include <windows.h>
 #include "vectorwar.h"
 
 
