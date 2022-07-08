@@ -2,6 +2,7 @@
 #define _VECTORWAR_H
 
 #include "ggponet.h"
+#include <windows.h>
 
 /*
  * vectorwar.h --
